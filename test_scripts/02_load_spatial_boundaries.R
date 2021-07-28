@@ -1,0 +1,11 @@
+# 02_load_spatial_boundaries.R
+# aim: a simple data input example
+# ivanhanigan
+
+if(!require("rgdal")) install.packages("rgdal"); library(rgdal)
+
+indir_spat <- "data_demo/spatial_boundaries"
+
+infile_spat <- "sa22016_case_studyV2.shp"
+
+shp_study_region <- readOGR(file.path(indir_spat, infile_spat))
