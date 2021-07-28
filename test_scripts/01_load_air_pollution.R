@@ -2,6 +2,9 @@
 # aim: a simple data input example
 # ivanhanigan
 
+
+if(!require("rgdal")) install.packages("rgdal"); library(rgdal)
+
 if(!require("raster")) install.packages("raster"); library(raster)
 
 indir_expo <- "data_demo/air_pollution"

@@ -2,8 +2,6 @@
 # aim: a simple data input example
 # ivanhanigan
 
-if(!require("rgdal")) install.packages("rgdal"); library(rgdal)
-
 indir_spat <- "data_demo/spatial_boundaries"
 
 infile_spat <- "sa22016_case_studyV2.shp"
