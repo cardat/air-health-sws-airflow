@@ -1,0 +1,8 @@
+# local airflow to ignore
+ardc-air-health-with-apache-air-flow/.env
+
+
+# code editors
+*.sublime*
+.code
+.vscode
