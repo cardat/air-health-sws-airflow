@@ -2,7 +2,9 @@
 # aim: a simple data input example
 # ivanhanigan
 
-indir_spat <- "data_demo/spatial_boundaries"
+message("Running: 02_load_spatial_boundaries.R")
+
+indir_spat <- here("data_demo", "spatial_boundaries")
 
 infile_spat <- "sa22016_case_studyV2.shp"
 
