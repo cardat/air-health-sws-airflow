@@ -5,7 +5,8 @@ packages <- c(
   "rgdal",
   "raster",
   "cloudstoR",
-  "purr"
+  "purr",
+  "optparse"
 )
 
 installed <- installed.packages()[, "Package"]

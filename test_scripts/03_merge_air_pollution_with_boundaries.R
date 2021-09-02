@@ -11,8 +11,8 @@ shp_output@data <- cbind(shp_output@data, tbl_exposures)
 
 writeOGR(
   shp_output,
-  "data_derived",
-  "shp_output",
+  out_folder,
+  out_file,
   driver = "ESRI Shapefile",
   overwrite_layer = TRUE,
   verbose = TRUE
