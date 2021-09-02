@@ -6,3 +6,9 @@ ardc-air-health-with-apache-air-flow/.env
 *.sublime*
 .code
 .vscode
+.Rproj.user
+.Rhistory
+
+
+**/cloudstor_credentials.R
+**/.bash_history
