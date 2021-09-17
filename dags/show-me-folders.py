@@ -25,5 +25,5 @@ with DAG(
 ) as dag:
     t1 = BashOperator(
         task_id='show_folders',
-        bash_command='cd /opt/airflow && tree',
+        bash_command='find /opt/airflow -type d -print',
     )
