@@ -2,8 +2,7 @@
 # aim: a simple data input example
 # ivanhanigan
 
-indir_spat <- "data_demo/spatial_boundaries"
+message("Running: 02_load_spatial_boundaries.R")
 
-infile_spat <- "sa22016_case_studyV2.shp"
 
-shp_study_region <- readOGR(file.path(indir_spat, infile_spat))
+shp_study_region <- readOGR(infile_spat)

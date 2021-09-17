@@ -1,0 +1,14 @@
+# local airflow to ignore
+ardc-air-health-with-apache-air-flow/.env
+
+
+# code editors
+*.sublime*
+.code
+.vscode
+.Rproj.user
+.Rhistory
+
+
+**/cloudstor_credentials.R
+**/.bash_history

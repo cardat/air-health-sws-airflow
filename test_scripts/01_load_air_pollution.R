@@ -2,13 +2,9 @@
 # aim: a simple data input example
 # ivanhanigan
 
+message("Running: 01_load_air_pollution.R")
 
-if(!require("rgdal")) install.packages("rgdal"); library(rgdal)
+library(rgdal)
+library(raster)
 
-if(!require("raster")) install.packages("raster"); library(raster)
-
-indir_expo <- "data_demo/air_pollution"
-
-infile_expo <- "GlobalGWRwUni_PM25_GL_201601_201612-RH35-NoNegs_AUS_20180618.tif"
-
-r <- raster(file.path(indir_expo, infile_expo))
+r <- raster(infile_expo)
