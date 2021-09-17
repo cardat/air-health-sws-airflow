@@ -24,6 +24,6 @@ with DAG(
     tags=['first', 'test']
 ) as dag:
     t1 = BashOperator(
-        task_id='print_date',
+        task_id='print_hello_sergio',
         bash_command=f'echo "Ciao {def_args["owner"]}! How is it going?"',
     )
