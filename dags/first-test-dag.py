@@ -26,7 +26,7 @@ with DAG(
         task_id='print_hello_sergio',
         #bash_command=f'echo "Ciao {def_args["owner"]}! How is it going?"',
         #-- rosie -- v
-        bash_command="./../scripts/helloworld.sh ",
+        bash_command="/scripts/helloworld.sh ",
         #-- ^
        
     )
