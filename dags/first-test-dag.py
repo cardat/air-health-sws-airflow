@@ -7,7 +7,7 @@ from datetime import timedelta
 def_args = {
     'owner': 'sergio',
     'depends_on_past': False,
-    'email': ['sergio.pintaldi@sydney.edu.au'],
+    'email': ['rosemarie.sadsad@sydney.edu.au'],
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 0,
@@ -26,7 +26,7 @@ with DAG(
         task_id='print_hello_sergio',
         #bash_command=f'echo "Ciao {def_args["owner"]}! How is it going?"',
         #-- rosie -- v
-        bash_command="sh ../scripts/helloworld.sh",
+        bash_command="sh ../scripts/helloworld.sh ",
         #-- ^
        
     )
