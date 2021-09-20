@@ -25,6 +25,5 @@ with DAG(
     t1 = BashOperator(
         task_id='print_hello_sergio',
         bash_command=f'echo "Ciao {def_args["owner"]}! How is it going?"',
-        bash_command=f'echo "{{ var.value.home }}"',
-        
+       
     )
