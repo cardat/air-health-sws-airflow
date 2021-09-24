@@ -5,7 +5,6 @@ packages <- c(
   "rgdal",
   "raster",
   "cloudstoR",
-  "purr",
   "optparse"
 )
 
