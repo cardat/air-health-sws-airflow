@@ -1,6 +1,10 @@
 # air-health-sws-airflow
 Scientific workflow system for environmental health impact assessments 
 
+## Setting up Airflow in your machine
+
+See [README](../air-flow-local-test/README.md).
+
 ## Install new packages
 
 Installation of new packages happens via the [`install.R`](./test_scripts/install.R) file. Simply add the new packages to the list, save the file and commit the changes. Finally run the file in Rstudio or via command line:

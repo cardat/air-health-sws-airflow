@@ -12,3 +12,25 @@ ardc-air-health-with-apache-air-flow/.env
 
 **/cloudstor_credentials.R
 **/.bash_history
+
+# Local airflow files
+/air-flow-local-test/webserver_config.py
+/air-flow-local-test/**/__pycache__/
+/air-flow-local-test/logs/
+/air-flow-local-test/plugins/
+/air-flow-local-test/test*/
+/air-flow-local-test/.env
+/air-flow-local-test/supervise
+/air-flow-local-test/*.py
+/air-flow-local-test/*.yaml
+/air-flow-local-test/Dockerfile
+/air-flow-local-test/start-airflow
+/air-flow-local-test/.env
+/air-flow-local-test/Dockerfile
+/air-flow-local-test/INSTALL.md
+/air-flow-local-test/airflow.cfg
+/air-flow-local-test/airflow.db
+/air-flow-local-test/logs/
+/air-flow-local-test/start-airflow
+/air-flow-local-test/supervise
+/air-flow-local-test/docker-compose.yaml
