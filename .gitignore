@@ -34,3 +34,5 @@ ardc-air-health-with-apache-air-flow/.env
 /air-flow-local-test/start-airflow
 /air-flow-local-test/supervise
 /air-flow-local-test/docker-compose.yaml
+/air-flow-local-test/airflow-webserver.pid
+/air-flow-local-test/airflow.db-journal
