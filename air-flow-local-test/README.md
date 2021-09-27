@@ -28,3 +28,7 @@ The instructions and installation scripts are valid for Unix like OS (Mac, Linux
         ./start-airflow-webserver.sh
 
 3. Open the Browser at [http://localhost:8080](http://localhost:8080) and login with `airflow` as username and password
+
+## Running script reading/writing from/to Cloudstor
+
+Read [__Cloudstor read/write__](../README.md###-cloudstor-read/write) to generate your Cloudstor username and password. `first-built-and-run-R-docker-pipeline-cloudstor.py` reads and writes from/to Cloudstor. In order to run it, add an Airflow variable through the interface (_Admin > Variables_ menu) and name it `cloudstor_psw`. You need to change the username and paths of the input and output data to match the ones in your Cloudstor (see [`00_main_cloudstor.R`](../test_scripts/00_main_cloudstor.R)).
