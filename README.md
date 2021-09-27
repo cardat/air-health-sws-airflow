@@ -3,7 +3,7 @@ Scientific workflow system for environmental health impact assessments
 
 ## Setting up Airflow in your machine
 
-See [README](../air-flow-local-test/README.md).
+See [README](./air-flow-local-test/README.md).
 
 ## Install new packages
 
