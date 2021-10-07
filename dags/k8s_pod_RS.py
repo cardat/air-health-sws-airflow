@@ -21,8 +21,8 @@ namespace = conf.get('kubernetes', 'NAMESPACE')
 #    config_file = '/usr/local/airflow/include/.kube/config'
 #    in_cluster=False
 #else:
-#    in_cluster=True
-#    config_file=None
+    in_cluster=True
+    config_file=None
 
 dag = DAG('k8s_pod_RS',
           schedule_interval='@once',
@@ -45,7 +45,7 @@ with dag:
         task_id="task-one",
         startup_timeout_seconds=300,
         #in_cluster=in_cluster, # if set to true, will look in the cluster, if false, looks for file
-        in_cluster=True, # if set to true, will look in the cluster, if false, looks for file
+        in_cluster=in_cluster, # if set to true, will look in the cluster, if false, looks for file
         cluster_context='docker-for-desktop', # is ignored when in_cluster is set to True
         config_file=config_file,
         resources=compute_resources,
