@@ -4,7 +4,7 @@ from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOpera
 from airflow import configuration as conf
 
 default_args = {
-    'owner': 'airflow',
+    'owner': 'Rosie',
     'depends_on_past': False,
     'start_date': datetime(2019, 1, 1),
     'email_on_failure': False,
