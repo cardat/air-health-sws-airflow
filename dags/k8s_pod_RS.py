@@ -27,7 +27,7 @@ with dag:
         task_id="task-one",
         namespace="airflow-car",
         image="hello-world",
-        startup_timeout_seconds=300,
-        resources=compute_resources,
+#        startup_timeout_seconds=300,
+#        resources=compute_resources,
         get_logs=True
     )
