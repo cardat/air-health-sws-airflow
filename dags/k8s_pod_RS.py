@@ -31,9 +31,9 @@ dag = DAG('example_kubernetes_pod',
 # This is where we define our desired resources.
 compute_resources = \
   {'request_cpu': '100m',
-  'request_memory': '1Gi',
+  'request_memory': '500Mb',
   'limit_cpu': '100m',
-  'limit_memory': '1Gi'}
+  'limit_memory': '500Mb'}
 
 with dag:
     k = KubernetesPodOperator(
