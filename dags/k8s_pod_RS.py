@@ -6,7 +6,6 @@ from airflow import configuration as conf
 default_args = {
     'owner': 'Rosie',
     'depends_on_past': False,
-    'start_date': datetime(2019, 1, 1),
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
