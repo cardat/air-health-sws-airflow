@@ -30,9 +30,9 @@ dag = DAG('k8s_pod_RS',
 # This is where we define our desired resources.
 compute_resources = \
   {'request_cpu': '100m',
-  'request_memory': '4Mib',
+  'request_memory': '4Mi',
   'limit_cpu': '100m',
-  'limit_memory': '4Mib'}
+  'limit_memory': '4Mi'}
 
 with dag:
     k = KubernetesPodOperator(
