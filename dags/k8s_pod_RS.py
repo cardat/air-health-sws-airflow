@@ -3,13 +3,9 @@ from datetime import datetime, timedelta
 from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator
 #from airflow import configuration as conf
 
-default_args = {
+dag = DAG('k8s_pod_RS',
     'owner': 'Rosie',
     'start_date': datetime(2021, 10, 7)
-}
-
-dag = DAG('k8s_pod_RS',
-          default_args=default_args
 )
 
 with dag:
