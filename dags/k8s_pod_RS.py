@@ -6,18 +6,12 @@ from airflow import configuration as conf
 default_args = {
     'owner': 'Rosie',
     'start_date': datetime(2021, 10, 7)
-#    'depends_on_past': False,
-#    'email_on_failure': False,
-#    'email_on_retry': False
 }
 
-namespace = conf.get('kubernetes', 'NAMESPACE')
-
-in_cluster=True
-config_file=None
+#namespace = conf.get('kubernetes', 'NAMESPACE')
 
 dag = DAG('k8s_pod_RS',
-          schedule_interval='@once',
+          schedule_interval='None',
           default_args=default_args)
 
 # This is where we define our desired resources.
@@ -29,16 +23,11 @@ compute_resources = \
 
 with dag:
     k = KubernetesPodOperator(
-#        namespace=namespace,
-        namespace="airflow-car",
-        image="hello-world",
-        labels={"foo": "bar"},
         name="airflow-test-pod",
         task_id="task-one",
+        namespace="airflow-car",
+        image="hello-world",
         startup_timeout_seconds=300,
-        in_cluster=in_cluster, # if set to true, will look in the cluster, if false, looks for file
-#        cluster_context='docker-for-desktop', # is ignored when in_cluster is set to True
-        config_file=config_file,
         resources=compute_resources,
-        is_delete_operator_pod=True,
-        get_logs=True)
+        get_logs=True
+    )
