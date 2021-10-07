@@ -5,6 +5,9 @@ from airflow.utils.dates import days_ago
 
 from datetime import timedelta
 
+# -- Start RS
+namespace = conf.get('kubernetes', 'NAMESPACE')
+# -- End RS
 
 default_args = {
     'owner': 'sergio',
@@ -27,7 +30,10 @@ with DAG(
 
     passing = KubernetesPodOperator(
         task_id="passing-task",
-        namespace='default',
+        #-- Start RS
+        #namespace='default',
+        namespace=namespace,
+        #-- End RS
         image="Python:3.6",
         cmds=["Python","-c"],
         arguments=["print('hello world')"],
@@ -38,7 +44,10 @@ with DAG(
 
     failing = KubernetesPodOperator(
         task_id="failing-task",
-        namespace='default',
+        #-- Start RS
+        #namespace='default',
+        namespace=namespace,
+        #-- End RS
         image="ubuntu:1604",
         cmds=["Python","-c"],
         arguments=["print('hello world')"],
