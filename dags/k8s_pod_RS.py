@@ -5,24 +5,14 @@ from airflow import configuration as conf
 
 default_args = {
     'owner': 'Rosie',
-    'start_date': datetime(2021, 10, 7),
-    'depends_on_past': False,
-    'email_on_failure': False,
-    'email_on_retry': False,
-    'retries': 1,
-    'retry_delay': timedelta(minutes=1),
+    'start_date': datetime(2021, 10, 7)
+#    'depends_on_past': False,
+#    'email_on_failure': False,
+#    'email_on_retry': False
 }
 
 namespace = conf.get('kubernetes', 'NAMESPACE')
 
-# This will detect the default namespace locally and read the
-# environment namespace when deployed to Astronomer.
-#if namespace =='default':
-#    config_file = '/usr/local/airflow/include/.kube/config'
-#    in_cluster=False
-#else:
-#    in_cluster=True
-#    config_file=None
 in_cluster=True
 config_file=None
 
@@ -46,9 +36,8 @@ with dag:
         name="airflow-test-pod",
         task_id="task-one",
         startup_timeout_seconds=300,
-        #in_cluster=in_cluster, # if set to true, will look in the cluster, if false, looks for file
         in_cluster=in_cluster, # if set to true, will look in the cluster, if false, looks for file
-        cluster_context='docker-for-desktop', # is ignored when in_cluster is set to True
+#        cluster_context='docker-for-desktop', # is ignored when in_cluster is set to True
         config_file=config_file,
         resources=compute_resources,
         is_delete_operator_pod=True,
