@@ -2,6 +2,9 @@ from airflow import DAG
 from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.utils.dates import days_ago
+# -- Start RS
+from airflow import configuration as conf
+# -- End RS
 
 from datetime import timedelta
 
