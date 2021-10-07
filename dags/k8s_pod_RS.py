@@ -23,16 +23,16 @@ else:
     in_cluster=True
     config_file=None
 
-dag = DAG('example_kubernetes_pod',
+dag = DAG('k8s_pod_RS',
           schedule_interval='@once',
           default_args=default_args)
 
 # This is where we define our desired resources.
 compute_resources = \
   {'request_cpu': '100m',
-  'request_memory': '500Mb',
+  'request_memory': '4Mib',
   'limit_cpu': '100m',
-  'limit_memory': '500Mb'}
+  'limit_memory': '4Mib'}
 
 with dag:
     k = KubernetesPodOperator(
@@ -41,6 +41,7 @@ with dag:
         labels={"foo": "bar"},
         name="airflow-test-pod",
         task_id="task-one",
+        startup_timeout_seconds=300,
         in_cluster=in_cluster, # if set to true, will look in the cluster, if false, looks for file
         cluster_context='docker-for-desktop', # is ignored when in_cluster is set to True
         config_file=config_file,
