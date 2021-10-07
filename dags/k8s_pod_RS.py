@@ -21,8 +21,10 @@ namespace = conf.get('kubernetes', 'NAMESPACE')
 #    config_file = '/usr/local/airflow/include/.kube/config'
 #    in_cluster=False
 #else:
-    in_cluster=True
-    config_file=None
+#    in_cluster=True
+#    config_file=None
+in_cluster=True
+config_file=None
 
 dag = DAG('k8s_pod_RS',
           schedule_interval='@once',
