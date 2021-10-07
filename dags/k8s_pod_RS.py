@@ -11,8 +11,8 @@ default_args = {
 #namespace = conf.get('kubernetes', 'NAMESPACE')
 
 dag = DAG('k8s_pod_RS',
-          schedule_interval='None',
-          default_args=default_args)
+          default_args=default_args
+)
 
 # This is where we define our desired resources.
 compute_resources = \
