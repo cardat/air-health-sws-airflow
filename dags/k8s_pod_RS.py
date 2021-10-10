@@ -17,6 +17,7 @@ with dag:
     k = KubernetesPodOperator(
         name="airflow-test-pod",
         task_id="task-one",
+        cmds=['echo'],
         namespace="airflow-car",
         image="hello-world",
         get_logs=True
