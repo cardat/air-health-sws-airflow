@@ -2,9 +2,15 @@ from airflow import DAG
 from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.utils.dates import days_ago
+# -- Start RS
+from airflow import configuration as conf
+# -- End RS
 
 from datetime import timedelta
 
+# -- Start RS
+namespace = conf.get('kubernetes', 'NAMESPACE')
+# -- End RS
 
 default_args = {
     'owner': 'sergio',
@@ -27,7 +33,10 @@ with DAG(
 
     passing = KubernetesPodOperator(
         task_id="passing-task",
-        namespace='default',
+        #-- Start RS
+        #namespace='default',
+        namespace=namespace,
+        #-- End RS
         image="Python:3.6",
         image_pull_secrets=['sergio-dockerhub-credentials'],
         cmds=["Python","-c"],
@@ -39,7 +48,10 @@ with DAG(
 
     failing = KubernetesPodOperator(
         task_id="failing-task",
-        namespace='default',
+        #-- Start RS
+        #namespace='default',
+        namespace=namespace,
+        #-- End RS
         image="ubuntu:1604",
         image_pull_secrets=['sergio-dockerhub-credentials'],
         cmds=["Python","-c"],
