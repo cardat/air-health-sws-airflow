@@ -62,7 +62,7 @@ with DAG(
     )
 
     bash_hello_world = KubernetesPodOperator(
-        task_id="failing-task",
+        task_id="hello-world-task",
         #-- Start RS
         #namespace='default',
         namespace=namespace,
