@@ -41,7 +41,7 @@ with DAG(
         # cmds is optional ... depends on container to run
         cmds=["bash"],
         # cmd arguments
-        arguments=["echo", "\'Hello World\'"],
+        arguments=["echo 10"],
         # not 100% sure whether namespace is required, but should be airflow-car
         namespace="airflow-car",
         image="alpine:3.10",
