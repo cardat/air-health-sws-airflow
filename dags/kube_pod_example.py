@@ -41,7 +41,7 @@ with DAG(
         image_pull_secrets=['sergio-dockerhub-credentials'],
         cmds=["Python","-c"],
         arguments=["print('hello world')"],
-        labels={"foo": "bar"},
+        # labels={"foo": "bar"},
         name="passing-test",
         get_logs=True
     )
@@ -56,10 +56,26 @@ with DAG(
         image_pull_secrets=['sergio-dockerhub-credentials'],
         cmds=["Python","-c"],
         arguments=["print('hello world')"],
-        labels={"foo": "bar"},
+        # labels={"foo": "bar"},
         name="fail",
+        get_logs=True
+    )
+
+    bash_hello_world = KubernetesPodOperator(
+        task_id="failing-task",
+        #-- Start RS
+        #namespace='default',
+        namespace=namespace,
+        #-- End RS
+        image="ubuntu:1604",
+        image_pull_secrets=['sergio-dockerhub-credentials'],
+        cmds=["bash", "-eu -c"],
+        arguments=["echo 'Hello World'"],
+        # labels={"foo": "bar"},
+        name="bash_hello",
         get_logs=True
     )
 
     start >> passing
     start >> failing
+    start >> bash_hello_world
