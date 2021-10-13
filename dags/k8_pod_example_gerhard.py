@@ -30,7 +30,7 @@ with DAG(
         #########################################################
         # The ID specified for the task.
         task_id="pod_hello_task",
-        is_delete_operator_pod=True,
+        # is_delete_operator_pod=True,
         get_logs=True,
         # labels={"foo": "bar"},
         # in_cluster=True,
