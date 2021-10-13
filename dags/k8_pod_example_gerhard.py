@@ -34,7 +34,7 @@ with DAG(
         is_delete_operator_pod=True,
         get_logs=True,
         # labels={"foo": "bar"},
-        in_cluster=True,
+        # in_cluster=True,
         # Name of task you want to run, used to generate Pod ID.
         name="pod_hello_task",
         #########################################################
