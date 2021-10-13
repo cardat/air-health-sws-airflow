@@ -12,7 +12,7 @@ default_args = {
     'owner': 'sergio',
     'depends_on_past': False,
     'email': ['sergio.pintaldi@sydney.edu.au'],
-    'email_on_failure': True,
+    'email_on_failure': False,
     'email_on_retry': False,
     'retries': 0,
     'retry_delay': timedelta(minutes=1)
