@@ -25,6 +25,7 @@ with DAG(
     tags=['test', 'kubernetes', 'pod']
 ) as dag:
     t = KubernetesPodOperator(
+
         #########################################################
         # airflow k8s pod operator settings
         #########################################################
@@ -58,5 +59,6 @@ with DAG(
         #     k8s.V1EnvVar(name="ST_AUTH_VERSION", value=HARVESTER_VARS["ST_AUTH_VERSION"]),
         #     k8s.V1EnvVar(name="OS_AUTH_URL", value=HARVESTER_VARS["OS_AUTH_URL"]),
         # ],
-        security_context=k8s.V1PodSecurityContext(run_as_user='rstudio'),
+        security_context=k8s.V1PodSecurityContext(run_as_user=1000),
+        # security_context=k8s.V1SecurityContext()(run_as_user='rstudio', ),
     )
