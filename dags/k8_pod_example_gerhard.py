@@ -57,4 +57,5 @@ with DAG(
         #     k8s.V1EnvVar(name="ST_AUTH_VERSION", value=HARVESTER_VARS["ST_AUTH_VERSION"]),
         #     k8s.V1EnvVar(name="OS_AUTH_URL", value=HARVESTER_VARS["OS_AUTH_URL"]),
         # ],
+        security_context=k8s.V1PodSecurityContext(run_as_non_root=False),
     )
