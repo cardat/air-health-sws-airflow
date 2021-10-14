@@ -32,7 +32,7 @@ with DAG(
         name="pod_run_pipeline",
         cmds=["bash", "-eucx"],
         arguments=[
-            "ls /",
+            "ls /opt",
             # "cd /opt/airflow/dags/sync",
             # "&&",
             # 'Rscript test_scripts/00_main_cloudstor.R'
