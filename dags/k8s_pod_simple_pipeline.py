@@ -17,6 +17,14 @@ default_args = {
     'retry_delay': timedelta(minutes=1)
 }
 
+
+volume = k8s.V1Volume(empty_dir={}, name="airflow-dags")
+vol_mount = k8s.V1VolumeMount(
+    name="airflow-dags",
+    mount_path="/workspace",
+    read_only=True
+)
+
 with DAG(
     'k8s_pod_simple_pipeline',
     default_args=default_args,
@@ -31,8 +39,10 @@ with DAG(
         # labels={"foo": "bar"},
         name="pod_run_pipeline",
         cmds=["bash", "-eucx"],
+        volumes=[volume],
+        volume_mounts=[volume_mount],
         arguments=[
-            "ls /opt",
+            "ls /",
             # "cd /opt/airflow/dags/sync",
             # "&&",
             # 'Rscript test_scripts/00_main_cloudstor.R'
