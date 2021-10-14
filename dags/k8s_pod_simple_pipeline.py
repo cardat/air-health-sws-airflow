@@ -33,7 +33,7 @@ with DAG(
         cmds=["bash", "-eucx"],
         arguments=[
             "cd /opt/airflow/dags/sync",
-            "&&"
+            "&&",
             '''
             Rscript test_scripts/00_main_cloudstor.R \
             -u "TBC" -p "TBC"
