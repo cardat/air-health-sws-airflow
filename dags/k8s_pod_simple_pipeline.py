@@ -40,7 +40,7 @@ with DAG(
         name="pod_run_pipeline",
         cmds=["bash", "-eucx"],
         volumes=[volume],
-        volume_mounts=[volume_mount],
+        volume_mounts=[vol_mount],
         arguments=[
             "ls /",
             # "cd /opt/airflow/dags/sync",
