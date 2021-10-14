@@ -42,7 +42,7 @@ with DAG(
         volumes=[volume],
         volume_mounts=[vol_mount],
         arguments=[
-            "ls /",
+            "ls /workspace",
             # "cd /opt/airflow/dags/sync",
             # "&&",
             # 'Rscript test_scripts/00_main_cloudstor.R'
