@@ -44,7 +44,7 @@ with DAG(
         cmds=["bash", "-cx"],
         # cmd arguments
         # arguments=["echo", "10", "echo pwd"],
-        arguments=["echo", "'hello'"],
+        arguments=["echo 'hello'"],
         # not 100% sure whether namespace is required, but should be airflow-car
         namespace="airflow-car",
         # image="alpine:3.10",
