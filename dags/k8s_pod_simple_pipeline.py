@@ -34,14 +34,12 @@ with DAG(
         arguments=[
             "cd /opt/airflow/dags/sync",
             "&&",
-            '''
-            Rscript test_scripts/00_main_cloudstor.R \
-            -u "TBC" -p "TBC"
-            -r "test airflow/input data/GlobalGWRwUni_PM25_GL_201601_201612-RH35-NoNegs_AUS_20180618.tif" \
-            -s "test airflow/input data/spatial_boundaries/sa22016_case_studyV2.shp" \
-            -o "test airflow/test output folder" \
-            -f "test_output"
-            '''
+            'Rscript test_scripts/00_main_cloudstor.R'
+            ' -u "TBC" -p "TBC"'
+            ' -r "test airflow/input data/GlobalGWRwUni_PM25_GL_201601_201612-RH35-NoNegs_AUS_20180618.tif"'
+            ' -s "test airflow/input data/spatial_boundaries/sa22016_case_studyV2.shp"'
+            ' -o "test airflow/test output folder"'
+            ' -f "test_output"'
         ],
         namespace="airflow-car",
         image="srggrs/pipeline-image:latest",
