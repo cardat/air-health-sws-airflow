@@ -18,9 +18,8 @@ default_args = {
 }
 
 
-volume = k8s.V1Volume(empty_dir={}, name="airflow-dags")
+# volume = k8s.V1Volume(empty_dir={}, name="airflow-dags")
 secret_volume = k8s.V1Volume(
-    empty_dir={},
     name="github-secret",
     secret=k8s.V1LocalObjectReference('gitsync-ssh ')
 )
@@ -31,11 +30,11 @@ secret_vol_mount = vol_mount = k8s.V1VolumeMount(
     read_only=True
 )
 
-vol_mount = k8s.V1VolumeMount(
-    name="airflow-dags",
-    mount_path="/workspace",
-    read_only=True
-)
+# vol_mount = k8s.V1VolumeMount(
+#     name="airflow-dags",
+#     mount_path="/workspace",
+#     read_only=True
+# )
 
 # init_container = k8s.V1Container(
 #     name="sync-my-repo",
