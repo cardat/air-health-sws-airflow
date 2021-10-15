@@ -66,8 +66,8 @@ init_container = k8s.V1Container(
     # volume_mounts=[secret_vol_mount, vol_mount],
     volume_mounts=[vol_mount],
     image_pull_policy="IfNotPresent",
-    # command=["bash", "-cx"],
-    # args=["echo 10"],
+    command=["bash", "-cx"],
+    args=["echo", "10"],
 )
 
 with DAG(
