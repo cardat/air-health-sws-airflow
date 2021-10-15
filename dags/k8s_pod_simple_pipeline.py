@@ -17,10 +17,9 @@ default_args = {
     'retry_delay': timedelta(minutes=1)
 }
 
-# volume = k8s.V1Volume(empty_dir={}, name="airflow-dags")
+volume = k8s.V1Volume(empty_dir={}, name="repo-files")
 secret_volume = k8s.V1Volume(
     name="github-secret",
-    # secret=k8s.V1LocalObjectReference('gitsync-ssh')
     secret=k8s.V1SecretVolumeSource(secret_name='gitsync-ssh')
 )
 
@@ -30,20 +29,36 @@ secret_vol_mount = k8s.V1VolumeMount(
     read_only=True
 )
 
-# vol_mount = k8s.V1VolumeMount(
-#     name="airflow-dags",
-#     mount_path="/workspace",
-#     read_only=True
-# )
+vol_mount = k8s.V1VolumeMount(
+    name="repo-files",
+    mount_path="/workspace",
+    # read_only=True
+)
 
-# init_container = k8s.V1Container(
-#     name="sync-my-repo",
-#     image="ubuntu:16.04",
-#     env=init_environments,
-#     volume_mounts=init_container_volume_mounts,
-#     command=["bash", "-cx"],
-#     args=["echo 10"],
-# )
+init_env_vars = [
+    k8s.V1EnvVar(
+        name='GIT_SYNC_REPO',
+        value='https://github.com/cardat/air-health-sws-airflow.git'
+    ),
+    k8s.V1EnvVar(name='GIT_SYNC_DEST', value='/workspace'),
+    k8s.V1EnvVar(
+        name='GIT_SSH_KEY_FILE',
+        value='/etc/secret-volume/gitSshKey'
+    ),
+    k8s.V1EnvVar(name='GIT_SYNC_SSH', value='true'),
+    k8s.V1EnvVar(name='GIT_KNOWN_HOSTS', value='false'),
+    k8s.V1EnvVar(name='GIT_SYNC_ONE_TIME', value='true'),
+]
+
+init_container = k8s.V1Container(
+    name="sync-my-repo",
+    image="openweb/git-sync",
+    env=init_env_vars,
+    volume_mounts=[secret_vol_mount, vol_mount],
+    image_pull_policy="IfNotPresent",
+    # command=["bash", "-cx"],
+    # args=["echo 10"],
+)
 
 with DAG(
     'k8s_pod_simple_pipeline',
@@ -59,10 +74,11 @@ with DAG(
         # labels={"foo": "bar"},
         name="pod_run_pipeline",
         cmds=["bash", "-eucx"],
-        volumes=[secret_volume],
-        volume_mounts=[secret_vol_mount],
+        volumes=[volume],
+        volume_mounts=[vol_mount],
         arguments=[
-            "cd /etc/secret-volume && ls -alsh && cat *",
+            # "cd /etc/secret-volume && ls -alsh && cat *",
+            "ls -alsh /workspace",
             # "cd /opt/airflow/dags/sync",
             # "&&",
             # 'Rscript test_scripts/00_main_cloudstor.R'
@@ -72,7 +88,7 @@ with DAG(
             # ' -o "test airflow/test output folder"'
             # ' -f "test_output"'
         ],
-        # init_containers=[init_container],
+        init_containers=[init_container],
         namespace="airflow-car",
         image="srggrs/pipeline-image:latest",
         image_pull_policy="IfNotPresent",
