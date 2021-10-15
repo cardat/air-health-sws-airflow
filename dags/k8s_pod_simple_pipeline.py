@@ -17,10 +17,19 @@ default_args = {
     'retry_delay': timedelta(minutes=1)
 }
 
-volume = k8s.V1Volume(empty_dir={}, name="repo-files")
+volume = k8s.V1Volume(
+    empty_dir={},
+    name="repo-files",
+    persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(
+        claim_name="repo-files"
+    )
+)
 secret_volume = k8s.V1Volume(
     name="github-secret",
-    secret=k8s.V1SecretVolumeSource(secret_name='gitsync-ssh')
+    secret=k8s.V1SecretVolumeSource(secret_name='gitsync-ssh'),
+    persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(
+        claim_name="github-secret"
+    )
 )
 
 secret_vol_mount = k8s.V1VolumeMount(
