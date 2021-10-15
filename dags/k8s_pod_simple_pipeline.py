@@ -24,19 +24,19 @@ volume = k8s.V1Volume(
         # claim_name="repo-files"
     # )
 )
-secret_volume = k8s.V1Volume(
-    name="github-secret",
-    secret=k8s.V1SecretVolumeSource(secret_name='gitsync-ssh'),
-    persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(
-        claim_name="github-secret"
-    )
-)
+# secret_volume = k8s.V1Volume(
+#     name="github-secret",
+#     secret=k8s.V1SecretVolumeSource(secret_name='gitsync-ssh'),
+#     persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(
+#         claim_name="github-secret"
+#     )
+# )
 
-secret_vol_mount = k8s.V1VolumeMount(
-    name="github-secret",
-    mount_path="/etc/secret-volume",
-    read_only=True
-)
+# secret_vol_mount = k8s.V1VolumeMount(
+#     name="github-secret",
+#     mount_path="/etc/secret-volume",
+#     read_only=True
+# )
 
 vol_mount = k8s.V1VolumeMount(
     name="repo-files",
