@@ -20,9 +20,9 @@ default_args = {
 volume = k8s.V1Volume(
     empty_dir={},
     name="repo-files",
-    persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(
-        claim_name="repo-files"
-    )
+    # persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(
+        # claim_name="repo-files"
+    # )
 )
 secret_volume = k8s.V1Volume(
     name="github-secret",
@@ -63,7 +63,8 @@ init_container = k8s.V1Container(
     name="sync-my-repo",
     image="openweb/git-sync",
     env=init_env_vars,
-    volume_mounts=[secret_vol_mount, vol_mount],
+    # volume_mounts=[secret_vol_mount, vol_mount],
+    volume_mounts=[vol_mount],
     image_pull_policy="IfNotPresent",
     # command=["bash", "-cx"],
     # args=["echo 10"],
