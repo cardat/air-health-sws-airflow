@@ -44,25 +44,25 @@ vol_mount = k8s.V1VolumeMount(
     # read_only=True
 )
 
-init_env_vars = [
-    k8s.V1EnvVar(
-        name='GIT_SYNC_REPO',
-        value='https://github.com/cardat/air-health-sws-airflow.git'
-    ),
-    k8s.V1EnvVar(name='GIT_SYNC_DEST', value='/workspace'),
-    k8s.V1EnvVar(
-        name='GIT_SSH_KEY_FILE',
-        value='/etc/secret-volume/gitSshKey'
-    ),
-    k8s.V1EnvVar(name='GIT_SYNC_SSH', value='true'),
-    k8s.V1EnvVar(name='GIT_KNOWN_HOSTS', value='false'),
-    k8s.V1EnvVar(name='GIT_SYNC_ONE_TIME', value='true'),
-]
+# init_env_vars = [
+#     k8s.V1EnvVar(
+#         name='GIT_SYNC_REPO',
+#         value='https://github.com/cardat/air-health-sws-airflow.git'
+#     ),
+#     k8s.V1EnvVar(name='GIT_SYNC_DEST', value='/workspace'),
+#     k8s.V1EnvVar(
+#         name='GIT_SSH_KEY_FILE',
+#         value='/etc/secret-volume/gitSshKey'
+#     ),
+#     k8s.V1EnvVar(name='GIT_SYNC_SSH', value='true'),
+#     k8s.V1EnvVar(name='GIT_KNOWN_HOSTS', value='false'),
+#     k8s.V1EnvVar(name='GIT_SYNC_ONE_TIME', value='true'),
+# ]
 
 init_container = k8s.V1Container(
     name="sync-my-repo",
-    image="openweb/git-sync",
-    env=init_env_vars,
+    image="openweb/git-sync:latest",
+    # env=init_env_vars,
     # volume_mounts=[secret_vol_mount, vol_mount],
     volume_mounts=[vol_mount],
     image_pull_policy="IfNotPresent",
@@ -82,7 +82,7 @@ with DAG(
         # is_delete_operator_pod=True,
         get_logs=True,
         # labels={"foo": "bar"},
-        name="pod_run_pipeline",
+        name="run_pipeline",
         cmds=["bash", "-eucx"],
         volumes=[volume],
         volume_mounts=[vol_mount],
