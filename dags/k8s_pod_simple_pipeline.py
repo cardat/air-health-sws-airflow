@@ -24,19 +24,19 @@ volume = k8s.V1Volume(
         # claim_name="repo-files"
     # )
 )
-# secret_volume = k8s.V1Volume(
-#     name="github-secret",
-#     secret=k8s.V1SecretVolumeSource(secret_name='gitsync-ssh'),
-#     persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(
-#         claim_name="github-secret"
-#     )
-# )
+secret_volume = k8s.V1Volume(
+    name="github-secret",
+    secret=k8s.V1SecretVolumeSource(secret_name='gitsync-ssh'),
+    # persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(
+    #     claim_name="github-secret"
+    # )
+)
 
-# secret_vol_mount = k8s.V1VolumeMount(
-#     name="github-secret",
-#     mount_path="/etc/secret-volume",
-#     read_only=True
-# )
+secret_vol_mount = k8s.V1VolumeMount(
+    name="github-secret",
+    mount_path="/etc/secret-volume",
+    read_only=True
+)
 
 vol_mount = k8s.V1VolumeMount(
     name="repo-files",
@@ -62,9 +62,10 @@ vol_mount = k8s.V1VolumeMount(
 init_container = k8s.V1Container(
     name="sync-my-repo",
     image="openweb/git-sync:latest",
+    # image="k8s.gcr.io/git-sync/git-sync:v3.3.4",
     # env=init_env_vars,
     # volume_mounts=[secret_vol_mount, vol_mount],
-    volume_mounts=[vol_mount],
+    volume_mounts=[vol_mount, secret_vol_mount],
     image_pull_policy="IfNotPresent",
     command=["bash", "-cx"],
     args=["echo", "10"],
