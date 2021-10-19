@@ -75,7 +75,7 @@ with DAG(
 ) as dag:
     t = KubernetesPodOperator(
         task_id="pod_run_pipeline",
-        # is_delete_operator_pod=True,
+        is_delete_operator_pod=True,
         get_logs=True,
         # labels={"foo": "bar"},
         name="run_pipeline",
@@ -83,9 +83,8 @@ with DAG(
         volumes=[volume],
         volume_mounts=[vol_mount],
         arguments=[
-            # "cd /etc/secret-volume && ls -alsh && cat *",
             'cd /tmp/git/repo && ls -alsh . && Rscript test_scripts/00_main_cloudstor.R'
-            ' -u "TBC" -p "TBC"'
+            ' -u "sergio.pintaldi@sydney.edu.au" -p "{{ var.value.sergio_cloudstor_psw }}"'
             ' -r "test airflow/input data/GlobalGWRwUni_PM25_GL_201601_201612-RH35-NoNegs_AUS_20180618.tif"'
             ' -s "test airflow/input data/spatial_boundaries/sa22016_case_studyV2.shp"'
             ' -o "test airflow/test output folder"'
