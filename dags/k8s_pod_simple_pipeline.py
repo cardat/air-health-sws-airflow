@@ -20,37 +20,21 @@ default_args = {
 volume = k8s.V1Volume(
     empty_dir={},
     name="repo-files",
-    # persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(
-        # claim_name="repo-files"
-    # )
 )
-# secret_volume = k8s.V1Volume(
-#     name="github-secret",
-#     secret=k8s.V1SecretVolumeSource(secret_name='gitsync-ssh'),
-#     # persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(
-#     #     claim_name="github-secret"
-#     # )
-# )
-
-# secret_vol_mount = k8s.V1VolumeMount(
-#     name="github-secret",
-#     mount_path="/etc/secret-volume",
-#     read_only=True
-# )
 
 vol_mount = k8s.V1VolumeMount(
     name="repo-files",
     mount_path="/tmp",
-    # read_only=True
 )
 
 init_env_vars = [
     k8s.V1EnvVar(
         name='GIT_SYNC_REPO',
-        # value='https://github.com/cardat/air-health-sws-airflow.git'
-        value='https://github.com/askap-vast/vast-pipeline.git'
+        value='https://github.com/cardat/air-health-sws-airflow.git'
     ),
-    # k8s.V1EnvVar(name='GIT_SYNC_DEST', value='/workspace'),
+    k8s.V1EnvVar(name='GIT_SYNC_ROOT', value='/tmp/git'),
+    k8s.V1EnvVar(name='GIT_SYNC_DEST', value='repo'),
+    k8s.V1EnvVar(name='GIT_SYNC_BRANCH', value='main'),
     # k8s.V1EnvVar(
     #     name='GIT_SSH_KEY_FILE',
     #     value='/etc/secret-volume/gitSshKey'
@@ -58,18 +42,28 @@ init_env_vars = [
     # k8s.V1EnvVar(name='GIT_SYNC_SSH', value='true'),
     k8s.V1EnvVar(name='GIT_KNOWN_HOSTS', value='false'),
     k8s.V1EnvVar(name='GIT_SYNC_ONE_TIME', value='true'),
+    k8s.V1EnvVar(
+        name='GIT_SYNC_USERNAME',
+        value_from=k8s.V1EnvVarSource(secret_key_ref=k8s.V1SecretKeySelector(
+            key='user',
+            name='sergio-github-credentials',
+        ))
+    ),
+    k8s.V1EnvVar(
+        name='GIT_SYNC_PASSWORD',
+        value_from=k8s.V1EnvVarSource(secret_key_ref=k8s.V1SecretKeySelector(
+            key='password',
+            name='sergio-github-credentials',
+        ))
+    ),
 ]
 
 init_container = k8s.V1Container(
     name="sync-my-repo",
-    # image="openweb/git-sync:latest",
     image="k8s.gcr.io/git-sync/git-sync:v3.3.4",
     env=init_env_vars,
-    # volume_mounts=[secret_vol_mount, vol_mount],
     volume_mounts=[vol_mount],
     image_pull_policy="IfNotPresent",
-    # command=["bash", "-cx"],
-    # args=["echo", "10"],
 )
 
 with DAG(
@@ -90,15 +84,16 @@ with DAG(
         volume_mounts=[vol_mount],
         arguments=[
             # "cd /etc/secret-volume && ls -alsh && cat *",
-            "ls -alsh /tmp",
-            # "cd /opt/airflow/dags/sync",
-            # "&&",
-            # 'Rscript test_scripts/00_main_cloudstor.R'
-            # ' -u "TBC" -p "TBC"'
-            # ' -r "test airflow/input data/GlobalGWRwUni_PM25_GL_201601_201612-RH35-NoNegs_AUS_20180618.tif"'
-            # ' -s "test airflow/input data/spatial_boundaries/sa22016_case_studyV2.shp"'
-            # ' -o "test airflow/test output folder"'
-            # ' -f "test_output"'
+            "cd /tmp/git/repo",
+            "&&",
+            "ls -alsh .",
+            "&&",
+            'Rscript test_scripts/00_main_cloudstor.R'
+            ' -u "TBC" -p "TBC"'
+            ' -r "test airflow/input data/GlobalGWRwUni_PM25_GL_201601_201612-RH35-NoNegs_AUS_20180618.tif"'
+            ' -s "test airflow/input data/spatial_boundaries/sa22016_case_studyV2.shp"'
+            ' -o "test airflow/test output folder"'
+            ' -f "test_output"'
         ],
         init_containers=[init_container],
         namespace="airflow-car",
