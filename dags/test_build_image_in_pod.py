@@ -85,11 +85,11 @@ with DAG(
         get_logs=True,
         # labels={"foo": "bar"},
         name="build_docker_image",
-        cmds=["img build"],
+        cmds=["img"],
         volumes=[volume],
         volume_mounts=[vol_mount],
         arguments=[
-            '--help'
+            'build --help'
             # '--workdir /home/user/src/test_scripts'
             # ' -t srg:latest .'
         ],
