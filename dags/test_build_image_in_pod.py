@@ -85,7 +85,7 @@ with DAG(
         get_logs=True,
         # labels={"foo": "bar"},
         name="build_docker_image",
-        cmds=["build"],
+        cmds=["img build"],
         volumes=[volume],
         volume_mounts=[vol_mount],
         arguments=[
