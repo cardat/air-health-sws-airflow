@@ -81,7 +81,7 @@ with DAG(
 ) as dag:
     t = KubernetesPodOperator(
         task_id="build_docker_image",
-        is_delete_operator_pod=True,
+        # is_delete_operator_pod=True,
         get_logs=True,
         # labels={"foo": "bar"},
         name="build_docker_image",
