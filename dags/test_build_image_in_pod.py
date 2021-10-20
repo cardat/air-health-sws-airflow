@@ -85,14 +85,14 @@ with DAG(
         get_logs=True,
         # labels={"foo": "bar"},
         name="build_docker_image",
-        # cmds=["img"],
+        cmds=["build"],
         volumes=[volume],
         volume_mounts=[vol_mount],
-        arguments=[
-            'build'
-            ' --workdir /home/user/src/test_scripts'
-            ' -t srg:latest .'
-        ],
+        # arguments=[
+        #     'build'
+        #     ' --workdir /home/user/src/test_scripts'
+        #     ' -t srg:latest .'
+        # ],
         init_containers=[init_container],
         namespace="airflow-car",
         image="r.j3ss.co/img:latest",
