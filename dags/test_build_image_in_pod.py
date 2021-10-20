@@ -101,8 +101,8 @@ with DAG(
         ],
         resources=k8s.V1ResourceRequirements(requests={"cpu": "0.25"}),
         security_context=k8s.V1PodSecurityContext(run_as_user=1000),
-        annotations={
-            'container.apparmor.security.beta.kubernetes.io/img': 'unconfined',
-            'container.seccomp.security.alpha.kubernetes.io/img': 'unconfined',
-        },
+        # annotations={
+        #     'container.apparmor.security.beta.kubernetes.io/img': 'unconfined',
+        #     'container.seccomp.security.alpha.kubernetes.io/img': 'unconfined',
+        # },
     )
