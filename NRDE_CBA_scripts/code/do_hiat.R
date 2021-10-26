@@ -79,11 +79,11 @@ for(i in 1:length(sa2_todo)){
   # end loop by sa2
 }
 
-saveRDS(out_master, "code/do_hia.rds")
+saveRDS(out_master, here("NRDE_CBA_scripts", "code/do_hia.rds"))
 
 
 #### summarise ####
-out_master <- readRDS("code/do_hia.rds")
+out_master <- readRDS(here("NRDE_CBA_scripts", "code/do_hia.rds"))
 # print(out_master)
 str(out_master)
 table(out_master$est_type)

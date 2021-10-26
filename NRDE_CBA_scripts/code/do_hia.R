@@ -1,4 +1,6 @@
 # take the prepared data file and run the HIA calculations
+library(here)
+
 #### load ####
 ##tbl_hia_baseline <- fread(paste0("working_temporary/tbl_hia_baseline_national_",run_label,".csv"))
 str(tbl_hia_baseline)
@@ -107,10 +109,12 @@ for(i in 1:length(sa2_todo)){
 # end loop by pollutant
 }
 
-saveRDS(out_master, "code/do_hia.rds")
+# TODO wrap `out_master` creation into a if file exists
+# if file.exists()
+saveRDS(out_master, here("NRDE_CBA_scripts", "code/do_hia.rds"))
 
 #### summarise ####
-out_master <- readRDS("code/do_hia.rds")
+out_master <- readRDS(here("NRDE_CBA_scripts", "code/do_hia.rds"))
 # print(out_master)
 str(out_master)
 table(out_master$est_type)
@@ -292,9 +296,6 @@ tab_summary_gcc[8,"uci"] <- yll_nat_av_uci
 tab_summary_gcc$zone <- substr(tab_summary_gcc$state, 2,2)
 
 tab_summary_gcc <- tab_summary_gcc[zone %in% c("G", "A") & date_year == 2015][order(pollutant, state)]
-#dir("figures_and_tables", pattern = "tab")
-# write.csv(tab_summary_gcc[zone %in% c("G", "A") & date_year == 2015][order(pollutant, state)]
-#           , "figures_and_tables/tab_summary_gcc.csv", row.names = F)
-
-
-
+dir("figures_and_tables", pattern = "tab")
+write.csv(tab_summary_gcc[zone %in% c("G", "A") & date_year == 2015][order(pollutant, state)]
+          , "figures_and_tables/tab_summary_gcc.csv", row.names = F)
