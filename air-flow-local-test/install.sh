@@ -4,6 +4,9 @@ set -euo pipefail
 export AIRFLOW_HOME=$(pwd)
 echo "Airflow install folder: ${AIRFLOW_HOME}"
 
+AIRFLOW_VERSION=2.2.2
+AIRFLOW_PYTHON_PATH=${CONDA_EXE%"bin/conda"}envs/airflow/bin
+
 if [[ -f "${AIRFLOW_PYTHON_PATH}/python" ]]; then
   echo "Conda environment already installed"
 else
@@ -11,8 +14,6 @@ else
   conda create -n airflow python=3.8.11 -y
 fi
 
-# AIRFLOW_VERSION=2.1.2
-AIRFLOW_PYTHON_PATH=${CONDA_EXE%"bin/conda"}envs/airflow/bin
 # echo "${AIRFLOW_PYTHON_PATH}"
 PYTHON_VERSION="$($AIRFLOW_PYTHON_PATH/python --version | cut -d " " -f 2 | cut -d "." -f 1-2)"
 # # echo "${PYTHON_VERSION}"
