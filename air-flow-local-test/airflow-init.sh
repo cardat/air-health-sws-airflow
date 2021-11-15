@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 export AIRFLOW_HOME=$(pwd)
 AIRFLOW_PYTHON_PATH=${CONDA_EXE%"bin/conda"}envs/airflow/bin
