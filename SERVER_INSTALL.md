@@ -30,6 +30,8 @@ Initialise airflow by copying the [`airflow-init.sh`](/air-flow-local-test/airfl
 ./airflow-init.sh
 ```
 
+Insert a password when prompted by the script.
+
 ### Run Airflow main services
 
 Since two main services need to be run via the terminal, there are two options here:
@@ -68,4 +70,22 @@ Steps:
     ./start-airflow-webserver.sh
     ```
 
-__NOTES__: For more info on the Airflow local platform see [official documentation](https://airflow.apache.org/docs/apache-airflow/stable/start/local.html).
+### Notes
+
+* In order to leave Airflow services running within `tmux` you can detach from the terminal using `CTRL + B` then `d`. Then re-attach with `tmux a`.
+
+* You need to port forward via SSH the webserver remote port in order to access Airflow dashboard. This can be done using this line in your SSH config file (on your machine):
+
+    ```bash
+    LocalForward 8080 localhost:8080
+    ```
+
+    or by executing this command on a terminal:
+
+    ```bash
+
+    ```
+
+    Note that this is a tunnel so once the SSH connection is terminated (e.g. exiting the terminal), you won't be able to access Airflow dashboard locally on your machine.
+
+* For more info on the Airflow local platform see [official documentation](https://airflow.apache.org/docs/apache-airflow/stable/start/local.html).
