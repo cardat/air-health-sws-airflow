@@ -43,7 +43,7 @@ with DAG(
                 echo "to";
                 echo "{{ params.dest_path }}";
                 mkdir -p "{{ params.dest_path }}" && \
-                [[ -d "{{ params.dest_path }}"  && -L "{{ params.dest_path }}" ]] && \
+                [[ -d "{{ params.dest_path }}"  && ! -L "{{ params.dest_path }}" ]] && \
                 cd "{{ params.dest_path }}" && git pull || git clone --depth 1 "{{ params.repo }}" "{{ params.dest_path }}"
             """,
             params={
