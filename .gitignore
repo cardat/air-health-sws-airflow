@@ -2,16 +2,17 @@
 ardc-air-health-with-apache-air-flow/.env
 
 
-# code editors
+# code editors and configs
 *.sublime*
 .code
 .vscode
 .Rproj.user
 .Rhistory
-
+sftp-config.json
 
 **/cloudstor_credentials.R
 **/.bash_history
+**/__pycache__/
 
 # Local airflow files
 /air-flow-local-test/webserver_config.py
@@ -36,3 +37,7 @@ ardc-air-health-with-apache-air-flow/.env
 /air-flow-local-test/docker-compose.yaml
 /air-flow-local-test/airflow-webserver.pid
 /air-flow-local-test/airflow.db-journal
+
+# Data
+working_temporary/
+figures_and_tables/
