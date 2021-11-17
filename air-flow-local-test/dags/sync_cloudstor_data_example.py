@@ -37,7 +37,6 @@ with DAG(
     for f in list(set(folders_to_sync)):
         remote_path = f
         remote_path = remote_path + "/" if remote_path[-1] != "/" else remote_path
-        remote_path = "/" + remote_path if remote_path[0] != "/" else remote_path
         
         task = BashOperator(
             task_id=f"dowload_{f.replace('/', '__')}",
