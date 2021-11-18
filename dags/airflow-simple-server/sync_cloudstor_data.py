@@ -13,6 +13,7 @@ from datetime import timedelta
 
 log = logging.getLogger(__name__)
 
+
 def_args = {
     'owner': 'airflow',
     'depends_on_past': False,
@@ -55,7 +56,6 @@ with DAG(
     paths_to_sync = read_cloudstor_paths("/mnt/data/repos/air-health-sws-airflow/cloudstor-data-paths.txt")
 
     for path in list(set(paths_to_sync)):
-        log.info(path)
         try:
             # check if file or folder
             if c.is_file(path):
@@ -95,5 +95,5 @@ with DAG(
             )
 
         except Exception as e:
-            print(path)
-            raise e
+            log.warning("Path not found %s", path)
+            pass
