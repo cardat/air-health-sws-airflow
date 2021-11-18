@@ -26,6 +26,7 @@ def read_cloudstor_paths(file_path: str) -> List[str]:
 
     with open(file_path, 'r') as fp:
         paths = fp.readlines()
+        paths = [x.replace("\n", "") for x in paths]
 
     return paths
 
@@ -50,21 +51,22 @@ with DAG(
 
     paths_to_sync = read_cloudstor_paths("/mnt/data/repos/air-health-sws-airflow/cloudstor-data-paths.txt")
 
-    for f in list(set(paths_to_sync)):
+    for path in list(set(paths_to_sync)):
 
         # check if file or folder
-        if c.is_file(f):
+        if c.is_file(path):
             # prepare parameter for remote file
-            remote_path = f
+            remote_path = path
             basedir = os.path.dirname(DATA_ROOT + remote_path)
             path_mkdir = basedir
-        elif c.is_dir(f):
+        elif c.is_dir(path):
             # prepare parameter for remote folder
-            remote_path = f + "/" if f[-1] != "/" else f
+            remote_path = path + "/" if path[-1] != "/" else path
             basedir = os.path.dirname(DATA_ROOT + remote_path[:-1])
             path_mkdir = DATA_ROOT + remote_path
         else:
             raise ValueError("Expected Cloudstor file or path")
+
 
         task = BashOperator(
             task_id=f"dowload_{f.replace('/', '__')}",
