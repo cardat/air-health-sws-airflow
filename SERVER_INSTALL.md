@@ -1,5 +1,7 @@
 # Instructions to set up a simple instance of Airflow on a remote server
 
+All the documentation refers to an airflow root folder in which the scripts and the installation will be performed. This folder can be named `airflow` and created under the home directory of one of the users or directly under the `/opt/` folder as that would be a better location for the installation. __Be mindful of Linux permissions__ when creating, installing and running tasks!
+
 ## Installation
 
 1. Download and install miniconda on the server:
