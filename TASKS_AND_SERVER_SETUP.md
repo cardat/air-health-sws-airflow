@@ -14,9 +14,9 @@ This instructions are essentially for a pre-production stage Airflow platform wi
 
 ## Run your tasks "automagically"
 
-1. Manually copy the workflow to sync a repo into Airflow machine. See an example of such: [`sync_repo_example.py`](/air-flow-local-test/dags/sync_repo_example.py)
+1. Manually copy the workflow to sync a repo into Airflow machine. See an example of such: [`sync_repo_example.py`](/air-flow-local-test/dags/sync_repo_example.py). And change the scheduling to suits needs (e.g. every 5 min).
 
-2. Set up a workflow or copy an existing one to sync saved/committed workflows from a local folder (ideally the repo synced by step 1) into the `dags` folder of Airflow in the server.
+2. Set up a workflow or copy an existing one to sync saved/committed workflows from a local folder (ideally the repo synced by step 1) into the `dags` folder of Airflow in the server. See example [`sync_dags_example.py`](/air-flow-local-test/dags/sync_dags_example.py).
 
 3. Start the workflow that sync Cloudstor data into Airflow server.
 
