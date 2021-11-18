@@ -95,5 +95,5 @@ with DAG(
             )
 
         except Exception as e:
-            log.warning("Path not found %s", path)
+            log.exception("Issues with cloudstor path %s", path)
             pass
