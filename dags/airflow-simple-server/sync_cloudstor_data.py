@@ -52,39 +52,44 @@ with DAG(
     paths_to_sync = read_cloudstor_paths("/mnt/data/repos/air-health-sws-airflow/cloudstor-data-paths.txt")
 
     for path in list(set(paths_to_sync)):
+        try:
+            # check if file or folder
+            if c.is_file(path):
+                # prepare parameter for remote file
+                remote_path = path
+                basedir = os.path.dirname(DATA_ROOT + remote_path)
+                path_mkdir = basedir
+            elif c.is_dir(path):
+                # prepare parameter for remote folder
+                remote_path = path + "/" if path[-1] != "/" else path
+                basedir = os.path.dirname(DATA_ROOT + remote_path[:-1])
+                path_mkdir = DATA_ROOT + remote_path
+            else:
+                raise ValueError("Expected Cloudstor file or path")
+            pass
 
-        # check if file or folder
-        if c.is_file(path):
-            # prepare parameter for remote file
-            remote_path = path
-            basedir = os.path.dirname(DATA_ROOT + remote_path)
-            path_mkdir = basedir
-        elif c.is_dir(path):
-            # prepare parameter for remote folder
-            remote_path = path + "/" if path[-1] != "/" else path
-            basedir = os.path.dirname(DATA_ROOT + remote_path[:-1])
-            path_mkdir = DATA_ROOT + remote_path
-        else:
-            raise ValueError("Expected Cloudstor file or path")
 
+            task = BashOperator(
+                task_id=f"dowload_{f.replace('/', '__')}",
+                bash_command="""
+                    set -euo pipefail;
+                    echo "Syncing";
+                    echo "{{ params.cloudstor_path }}"
+                    echo "to";
+                    echo "{{ params.out_path_print }}";
+                    mkdir -p "{{ params.out_path_mkdir }}" && \
+                    duck -u "{{ var.value.cloudstor_user }}" \
+                    -p "{{ var.value.cloudstor_psw }}" -e compare \
+                    -d "{{ params.cloudstor_path }}" "{{ params.out_path_basedir }}"
+                """,
+                params={
+                    'out_path_mkdir': path_mkdir,
+                    'out_path_print': DATA_ROOT + remote_path,
+                    'out_path_basedir': basedir,
+                    'cloudstor_path': CLOUDSTOR_ROOT + remote_path
+                }
+            )
 
-        task = BashOperator(
-            task_id=f"dowload_{f.replace('/', '__')}",
-            bash_command="""
-                set -euo pipefail;
-                echo "Syncing";
-                echo "{{ params.cloudstor_path }}"
-                echo "to";
-                echo "{{ params.out_path_print }}";
-                mkdir -p "{{ params.out_path_mkdir }}" && \
-                duck -u "{{ var.value.cloudstor_user }}" \
-                -p "{{ var.value.cloudstor_psw }}" -e compare \
-                -d "{{ params.cloudstor_path }}" "{{ params.out_path_basedir }}"
-            """,
-            params={
-                'out_path_mkdir': path_mkdir,
-                'out_path_print': DATA_ROOT + remote_path,
-                'out_path_basedir': basedir,
-                'cloudstor_path': CLOUDSTOR_ROOT + remote_path
-            }
-        )
+        except Exception as e:
+            print(path)
+            raise e
