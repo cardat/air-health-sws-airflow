@@ -1,4 +1,5 @@
 import os
+import logging
 
 from airflow import DAG
 from airflow.utils.dates import days_ago
@@ -9,6 +10,8 @@ from typing import List
 from cloudstor import cloudstor
 from datetime import timedelta
 
+
+log = logging.getLogger(__name__)
 
 def_args = {
     'owner': 'airflow',
@@ -25,8 +28,8 @@ def read_cloudstor_paths(file_path: str) -> List[str]:
     paths = []
 
     with open(file_path, 'r') as fp:
-        paths = fp.readlines()
-        paths = [x.replace("\n", "") for x in paths]
+        for x in fp.readlines():
+            paths.append(x.replace("\n", ""))
 
     return paths
 
@@ -52,6 +55,7 @@ with DAG(
     paths_to_sync = read_cloudstor_paths("/mnt/data/repos/air-health-sws-airflow/cloudstor-data-paths.txt")
 
     for path in list(set(paths_to_sync)):
+        log.info(path)
         try:
             # check if file or folder
             if c.is_file(path):
