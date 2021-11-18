@@ -3,7 +3,10 @@ import os
 from airflow import DAG
 from airflow.utils.dates import days_ago
 from airflow.operators.bash import BashOperator
+from airflow.models import Variable
 
+from typing import List
+from cloudstor import cloudstor
 from datetime import timedelta
 
 
@@ -17,6 +20,16 @@ def_args = {
     'retry_delay': timedelta(minutes=1),
 }
 
+def read_cloudstor_paths(file_path: str) -> List[str]:
+
+    paths = []
+
+    with open(file_path, 'r') as fp:
+        paths = fp.readlines()
+
+    return paths
+
+
 with DAG(
     'sync_cloudstor_data',
     default_args=def_args,
@@ -29,14 +42,29 @@ with DAG(
     DATA_ROOT = "/mnt/data/cloudstor-data"
     CLOUDSTOR_ROOT = "davs://cloudstor.aarnet.edu.au/plus/remote.php/webdav"
 
-    folders_to_sync = [
-        "/Shared/Environment_General/ABS_data/ABS_meshblocks/abs_meshblocks_2011_data_provided",
-        "/Shared/Environment_General/ABS_data/ABS_meshblocks/abs_meshblocks_2016_data_provided",
-    ]
+    c = cloudstor(
+        private=True,
+        username=Variable.get("cloudstor_user", default_var="None"),
+        password=Variable.get("cloudstor_psw", default_var="None")
+    )
 
-    for f in list(set(folders_to_sync)):
-        remote_path = f
-        remote_path = remote_path + "/" if remote_path[-1] != "/" else remote_path
+    paths_to_sync = read_cloudstor_paths("/mnt/data/repos/air-health-sws-airflow/cloudstor-data-paths.txt")
+
+    for f in list(set(paths_to_sync)):
+
+        # check if file or folder
+        if c.is_file(f):
+            # prepare parameter for remote file
+            remote_path = f
+            basedir = os.path.dirname(DATA_ROOT + remote_path)
+            path_mkdir = basedir
+        elif c.is_dir(f):
+            # prepare parameter for remote folder
+            remote_path = f + "/" if f[-1] != "/" else f
+            basedir = os.path.dirname(DATA_ROOT + remote_path[:-1])
+            path_mkdir = DATA_ROOT + remote_path
+        else:
+            raise ValueError("Expected Cloudstor file or path")
 
         task = BashOperator(
             task_id=f"dowload_{f.replace('/', '__')}",
@@ -45,15 +73,16 @@ with DAG(
                 echo "Syncing";
                 echo "{{ params.cloudstor_path }}"
                 echo "to";
-                echo "{{ params.out_path }}";
-                mkdir -p "{{ params.out_path }}" && \
+                echo "{{ params.out_path_print }}";
+                mkdir -p "{{ params.out_path_mkdir }}" && \
                 duck -u "{{ var.value.cloudstor_user }}" \
                 -p "{{ var.value.cloudstor_psw }}" -e compare \
                 -d "{{ params.cloudstor_path }}" "{{ params.out_path_basedir }}"
             """,
             params={
-                'out_path': DATA_ROOT + remote_path,
-                'out_path_basedir': os.path.dirname(DATA_ROOT + remote_path[:-1]),
+                'out_path_mkdir': path_mkdir,
+                'out_path_print': DATA_ROOT + remote_path,
+                'out_path_basedir': basedir,
                 'cloudstor_path': CLOUDSTOR_ROOT + remote_path
             }
         )
