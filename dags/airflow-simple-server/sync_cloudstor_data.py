@@ -74,7 +74,7 @@ with DAG(
 
 
             task = BashOperator(
-                task_id=f"dowload_{f.replace('/', '__')}",
+                task_id=f"dowload_{path.replace('/', '__')}",
                 bash_command="""
                     set -euo pipefail;
                     echo "Syncing";
