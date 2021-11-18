@@ -22,5 +22,5 @@ CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${A
 # # For example: https://raw.githubusercontent.com/apache/airflow/constraints-2.1.2/constraints-3.6.txt
 echo "Installing airflow . . ."
 "${AIRFLOW_PYTHON_PATH}"/pip install "apache-airflow[docker]==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}"
-"${AIRFLOW_PYTHON_PATH}"/pip install airflow-code-editor
+"${AIRFLOW_PYTHON_PATH}"/pip install airflow-code-editor cloudstor
 
