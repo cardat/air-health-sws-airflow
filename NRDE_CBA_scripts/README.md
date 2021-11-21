@@ -2,7 +2,7 @@
 
 ## Expected file paths
 
-This are Cloudstor relative paths:
+Files and/or folders as input to the scripts are found in [`cloudstor-data-paths.txt`](/cloudstor-data-paths.txt) and/or below:
 
 * `/Shared/Environment_General/ABS_data/ABS_meshblocks/abs_meshblocks_2011_data_provided`
 
@@ -28,3 +28,10 @@ This are Cloudstor relative paths:
 
 * `/Shared/SatNO2_2012_2015/data_provided/MB_NO2_update_250221.csv`
 
+## Run the NRDE CBA scripts
+
+In order to run the script you need to open a terminal and navigate to the script folder and execute it with the command below:
+
+```bash
+Rscript NRDE_CBA_main.R -d /path/to/root/of/input/data
+```
