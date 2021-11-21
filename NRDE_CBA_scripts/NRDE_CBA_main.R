@@ -1,9 +1,34 @@
 ## to run all steps for analysis, step by step.
 # based on original Aus BoD PM2.5 codes by ivan hanigan and Josh Horsley
 library(here)
+library(optparse)
+
+
+args_list  <- list(
+  make_option(
+    c('-d', '--input-file-base-dir'), type = 'character', default = NULL,
+    help = 'Path to the root directory of the input files (e.g. Cloudstor root folder)',
+    dest = 'root_input_dir'
+  )
+)
+
+# parsing arguments
+opt_parser <- OptionParser(option_list = args_list);
+opt <- parse_args(opt_parser);
+
+# Throw and error if script arguments are not passed
+error_cond <- is.null(opt$root_input_dir)
+if (error_cond) {
+  print_help(opt_parser)
+  stop('Must supply path to root of input data. Run with --help to see required inputs', call. = FALSE)
+}
+
+DATA_ROOT_FOLDER <- opt$root_input_dir
 
 run_label <- "20210915"
 st <- Sys.time()
+
+
 #### functions ####
 reinstall_iomlifetR <- F
 if(reinstall_iomlifetR){

@@ -1,6 +1,6 @@
 # Default paths -----------------------------------------------------------
 
-
+# TODO: clean paths and error message, as path has been modified to be an input argument to the main script, e.g. "Rscript NRDE_CBA_main.R -d /path/to/root/of/input/data"
 # coesra
 path_env_gen_coesra <- "~/public_share_data/ResearchData_CAR/Environment_General"
 path_shared_owncloud <- "~/ownCloud/Shared/"
@@ -18,6 +18,7 @@ path_shared <- NA
 if(dir.exists(path_shared_owncloud)) path_shared <- path_shared_owncloud
 if(dir.exists(path_shared_cloudstor_pc)) path_shared <- path_shared_cloudstor_pc
 if(dir.exists(path_shared_cloudstor_mac)) path_shared <- path_shared_cloudstor_mac
+if(dir.exists(DATA_ROOT_FOLDER)) path_shared <- DATA_ROOT_FOLDER
 
 if(is.na(path_shared)) stop("Could not find Cloudstor/ownCloud shared directory:\nPlease see paths in code/paths_external.R")
 
