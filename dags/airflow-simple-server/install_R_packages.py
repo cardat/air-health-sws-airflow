@@ -34,7 +34,7 @@ with DAG(
             echo "Installing R packages using";
             echo "{{ params.path }}"
             cd $(dirname "{{ params.path }}") && \
-            Rscript -d "{{ params.path }}"
+            Rscript "{{ params.path }}"
         """,
         params={
             'path': PATH_TO_INSTALL_SCRIPT,
