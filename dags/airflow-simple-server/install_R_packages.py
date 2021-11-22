@@ -1,3 +1,5 @@
+import os
+
 from airflow import DAG
 from airflow.utils.dates import days_ago
 from airflow.operators.bash import BashOperator
@@ -32,11 +34,12 @@ with DAG(
         bash_command="""
             set -euo pipefail;
             echo "Installing R packages using";
-            echo "{{ params.path }}"
-            cd $(dirname "{{ params.path }}") && \
+            echo "{{ params.path_print }}";
             Rscript "{{ params.path }}"
         """,
         params={
-            'path': PATH_TO_INSTALL_SCRIPT,
-        }
+            'path': os.path.basename(PATH_TO_INSTALL_SCRIPT),
+            'path_print': PATH_TO_INSTALL_SCRIPT,
+        },
+        cwd=os.path.dirname(PATH_TO_INSTALL_SCRIPT),
     )
