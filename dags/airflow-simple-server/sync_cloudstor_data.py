@@ -50,7 +50,7 @@ with DAG(
     c = cloudstor(
         private=True,
         username=Variable.get("cloudstor_user", default_var="None"),
-        password=Variable.get("cloudstor_psw", default_var="None")
+        password=Variable.get("cloudstor_password", default_var="None")
     )
 
     paths_to_sync = read_cloudstor_paths("/mnt/data/repos/air-health-sws-airflow/cloudstor-data-paths.txt")
@@ -83,7 +83,7 @@ with DAG(
                     echo "{{ params.out_path_print }}";
                     mkdir -p "{{ params.out_path_mkdir }}" && \
                     duck -u "{{ var.value.cloudstor_user }}" \
-                    -p "{{ var.value.cloudstor_psw }}" -e compare \
+                    -p "{{ var.value.cloudstor_password }}" -e compare \
                     -d "{{ params.cloudstor_path }}" "{{ params.out_path_basedir }}"
                 """,
                 params={

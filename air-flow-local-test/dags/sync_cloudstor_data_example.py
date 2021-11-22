@@ -48,7 +48,7 @@ with DAG(
                 echo "{{ params.out_path }}";
                 mkdir -p "{{ params.out_path }}" && \
                 duck -u "{{ var.value.cloudstor_user }}" \
-                -p "{{ var.value.cloudstor_psw }}" -e compare \
+                -p "{{ var.value.cloudstor_password }}" -e compare \
                 -d "{{ params.cloudstor_path }}" "{{ params.out_path_basedir }}"
             """,
             params={
