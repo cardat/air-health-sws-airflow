@@ -30,8 +30,7 @@ st <- Sys.time()
 
 
 #### functions ####
-reinstall_iomlifetR <- F
-if(reinstall_iomlifetR){
+if(!'iomlifetR' %in% installed.packages()[, "Package"]){
   if(!require(devtools)) install.packages("devtools"); library(devtools)
   install_github("richardbroome2002/iomlifetR", build_vignettes = TRUE)  
 }
