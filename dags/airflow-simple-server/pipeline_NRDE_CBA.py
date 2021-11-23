@@ -37,7 +37,7 @@ with DAG(
             Rscript "{{ params.path }}" -d "{{ data_path }}"
         """,
         params={
-            'path': os.path.basename(PATH_TO_INSTALL_SCRIPT),
+            'path': os.path.basename(PIPELINE_PATH),
             'data_path': DATA_ROOT,
         },
         cwd=os.path.dirname(PIPELINE_PATH),
