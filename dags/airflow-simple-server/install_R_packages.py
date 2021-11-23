@@ -30,7 +30,7 @@ with DAG(
     PATH_TO_INSTALL_SCRIPT = "/mnt/data/repos/air-health-sws-airflow/test_scripts/install.R"
 
     task = BashOperator(
-        task_id=f"installing_R_packages_using_script",
+        task_id="installing_R_packages_using_script",
         bash_command="""
             set -euo pipefail;
             echo "Installing R packages using";
