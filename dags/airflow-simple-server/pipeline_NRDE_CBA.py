@@ -34,7 +34,8 @@ with DAG(
         task_id="Running_NRDE_CBA_main",
         bash_command="""
             set -euo pipefail;
-            Rscript "{{ params.path }}" -d "{{ params.data_path }}"
+            Rscript "{{ params.path }}" -u "{{ var.value.cloudstor_user }}" \
+            -p "{{ var.value.cloudstor_password }}" -d "{{ params.data_path }}"
         """,
         params={
             'path': os.path.basename(PIPELINE_PATH),
