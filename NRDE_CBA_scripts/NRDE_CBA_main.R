@@ -6,9 +6,24 @@ library(optparse)
 
 args_list  <- list(
   make_option(
+    c('-u', '--user'), type = 'character', default = NULL,
+    help = 'Cloudstor Username',
+    dest = 'user'
+  ),
+  make_option(
+    c('-p', '--password'), type = 'character', default = NULL,
+    help = 'Cloudstor password',
+    dest = 'password'
+  ),
+  make_option(
     c('-d', '--input-file-base-dir'), type = 'character', default = NULL,
     help = 'Path to the root directory of the input files (e.g. Cloudstor root folder)',
     dest = 'root_input_dir'
+  ),
+  make_option(
+    c('-o', '--output-folder'), type = 'character', default = "NRDE_CBA_outputs",
+    help = 'Path to output folder in Cloudstor [default %default]',
+    dest = 'output_folder'
   )
 )
 
@@ -17,11 +32,23 @@ opt_parser <- OptionParser(option_list = args_list);
 opt <- parse_args(opt_parser);
 
 # Throw and error if script arguments are not passed
-error_cond <- is.null(opt$root_input_dir)
+error_cond <- is.null(opt$user) | is.null(opt$password) | is.null(opt$root_input_dir)
 if (error_cond) {
   print_help(opt_parser)
-  stop('Must supply path to root of input data. Run with --help to see required inputs', call. = FALSE)
+  stop('Must supply script inputs. Run with --help to see required inputs', call. = FALSE)
 }
+
+# Check if Cloudstor output folder exists else stop the script
+tryCatch(
+  {
+    cloud_list(opt$output_folder, user = opt$user, password = opt$password)
+  },
+  error = function(cond) {
+    # Folder not found so stop the code
+    message(cond)
+    stop(paste0('Folder ', opt$output_folder,' not found in Cloudstor, are you sure it exists?'), call. = FALSE)
+  }
+)
 
 DATA_ROOT_FOLDER <- opt$root_input_dir
 
@@ -168,6 +195,9 @@ if(choose_state){tbl_hia_baseline <- tbl_hia_baseline[STE_CODE16 == "1", ]}
 # Run HIA
 source(file.path(BASE_FOLDER, "code/do_hia.R"))
 message("Finished running HIA calculation")
+
+# save output to Cloudstor folder
+source(file.path("code/save_to_cloudstor.R"))
 
 # tab_summary_ste_baseline <- tab_summary_ste
 # head(tab_summary_ste_baseline)
