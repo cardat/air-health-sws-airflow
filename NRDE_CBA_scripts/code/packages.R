@@ -5,6 +5,7 @@ message("\n########################\nPackage Install - Starting\n###############
 
 pkg_req <- c(
   "car",
+  "cloudstoR",
   "data.table",
   "readr",
   "rgdal",

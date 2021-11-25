@@ -38,18 +38,6 @@ if (error_cond) {
   stop('Must supply script inputs. Run with --help to see required inputs', call. = FALSE)
 }
 
-# Check if Cloudstor output folder exists else stop the script
-tryCatch(
-  {
-    cloud_list(opt$output_folder, user = opt$user, password = opt$password)
-  },
-  error = function(cond) {
-    # Folder not found so stop the code
-    message(cond)
-    stop(paste0('Folder ', opt$output_folder,' not found in Cloudstor, are you sure it exists?'), call. = FALSE)
-  }
-)
-
 DATA_ROOT_FOLDER <- opt$root_input_dir
 
 run_label <- "20210915"
@@ -67,6 +55,17 @@ BASE_FOLDER <- here("NRDE_CBA_scripts")
 
 source(file.path(BASE_FOLDER, "code/packages.R"))
 
+# Check if Cloudstor output folder exists else stop the script
+tryCatch(
+  {
+    cloud_list(opt$output_folder, user = opt$user, password = opt$password)
+  },
+  error = function(cond) {
+    # Folder not found so stop the code
+    message(cond)
+    stop(paste0('Folder ', opt$output_folder,' not found in Cloudstor, are you sure it exists?'), call. = FALSE)
+  }
+)
 
 # Setup directories
 source(file.path(BASE_FOLDER, "code/dir_setup.R"))
