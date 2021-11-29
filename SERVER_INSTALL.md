@@ -85,7 +85,7 @@ Steps:
     or by executing this command on a terminal:
 
     ```bash
-
+    ssh -L 8080:localhost:8080 <IP.OF.VM>
     ```
 
     Note that this is a tunnel so once the SSH connection is terminated (e.g. exiting the terminal), you won't be able to access Airflow dashboard locally on your machine.
