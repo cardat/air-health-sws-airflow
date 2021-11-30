@@ -30,21 +30,23 @@ Alternatives to `duck` exist both in Python ([`cloudstor`](https://github.com/un
 
 Some of the packages required by the R scripts need some OS dependencies. Most of the current dependencies are list below and can be installed with the following script:
 
-* libcurl4-openssl-dev
-* make
-* gcc
-* libxml2-dev
-* g++
-* build-essential
-* libssl-dev
-* gfortran
-* libudunits2-dev
-* gdal-bin
-* proj-bin
-* libgdal-dev
-* libproj-dev
-* libsodium-dev
+* `libcurl4-openssl-dev`
+* `make`
+* `gcc`
+* `libxml2-dev`
+* `g++`
+* `build-essential`
+* `libssl-dev`
+* `gfortran`
+* `libudunits2-dev`
+* `gdal-bin`
+* `proj-bin`
+* `libgdal-dev`
+* `libproj-dev`
+* `libsodium-dev`
 
 ```bash
-sudo apt-get install libcurl4-openssl-dev make gcc libxml2-dev g++ build-essential libssl-dev gfortran libudunits2-dev gdal-bin proj-bin libgdal-dev libproj-dev libsodium-dev -y
+sudo apt-get install libcurl4-openssl-dev make gcc libxml2-dev g++ \
+    build-essential libssl-dev gfortran libudunits2-dev gdal-bin \
+    proj-bin libgdal-dev libproj-dev libsodium-dev -y
 ```
