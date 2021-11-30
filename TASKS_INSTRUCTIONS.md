@@ -24,7 +24,7 @@ Alternatives to `duck` exist both in Python ([`cloudstor`](https://github.com/un
 
 1. Install R into the server. E.g. for Ubuntu 18.04 follow [these instructions](https://cloud.r-project.org/).
 
-2. Run the DAG with the R task
+2. Run the DAG with the R task. See an example [`run_R_script_example.py`](/air-flow-local-test/dags/run_R_script_example.py)
 
 ## Note
 
