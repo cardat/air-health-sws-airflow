@@ -19,7 +19,7 @@ def_args = {
 }
 
 with DAG(
-    'pipeline_NRDE_CBA',
+    'pipeline_NRDE_CBA_cloudstor_mounted',
     default_args=def_args,
     description='Run the NRDE CBA pipeline given a file location with the code',
     schedule_interval=None,
@@ -31,7 +31,7 @@ with DAG(
     DATA_ROOT = "/cloudstor/Shared/"
 
     task = BashOperator(
-        task_id="Running_NRDE_CBA_main",
+        task_id="Running_NRDE_CBA_main_cloudstor_mounted",
         bash_command="""
             set -euo pipefail;
             Rscript "{{ params.path }}" -d "{{ params.data_path }}" -o "/cloudstor/NRDE_CBA_outs"
